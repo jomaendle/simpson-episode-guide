@@ -17,4 +17,17 @@ export const routes: Routes = [
         (m) => m.SeasonOverviewComponent,
       ),
   },
+  {
+    path: 'season/:seasonId/:episodeId',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import('./feature/episode-overview/episode-overview.component').then(
+        (m) => m.EpisodeOverviewComponent,
+      ),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '',
+  },
 ];

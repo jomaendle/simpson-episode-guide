@@ -3,15 +3,20 @@
 
   <h2 class="">Season {{ season.seasonId }}</h2>
 
-  <div>
-    <ul class="flex flex-col gap-4">
-      <li *ngFor="let episode of season.episodes">
-        <h3>{{ episode.EpisodeNumber }} - {{ episode.EpisodeName }}</h3>
-
+  <ul
+    class="flex flex-col gap-8 md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  >
+    <a
+      *ngFor="let episode of season.episodes; let index = index"
+      class="card"
+      [routerLink]="season.episodes[index].id"
+    >
+      <li>
+        <h3>{{ episode.EpisodeNumber }}. {{ episode.EpisodeName }}</h3>
         <p class="text-gray-300 text-sm">
           {{ episode.Overview }}
         </p>
       </li>
-    </ul>
-  </div>
+    </a>
+  </ul>
 </ng-container>

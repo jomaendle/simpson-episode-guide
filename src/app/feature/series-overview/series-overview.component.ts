@@ -2,12 +2,18 @@ import { Component } from '@angular/core';
 import { SeriesService } from '../../data-access/series.service';
 import { LetDirective } from '@ngrx/component';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
+import {
+  AsyncPipe,
+  DatePipe,
+  JsonPipe,
+  NgForOf,
+  NgIf,
+  NgOptimizedImage,
+} from '@angular/common';
 import { ComponentStore } from '@ngrx/component-store';
 import { Series } from '../../models/series';
 import { Observable, switchMap, tap } from 'rxjs';
-import { TagSectionComponent } from './tag-section/tag-section.component';
-import { InfoFieldComponent } from './info-field/info-field.component';
+import { InfoFieldComponent, TagSectionComponent } from '../../ui';
 
 export interface SeriesOverviewState {
   series?: Series | undefined;
@@ -32,29 +38,24 @@ const INITIAL_STATE: SeriesOverviewState = {
     TagSectionComponent,
     InfoFieldComponent,
     DatePipe,
+    NgOptimizedImage,
   ],
   template: `
     <ng-container *ngrxLet="series$ as series">
       <div *ngIf="series" class="flex flex-col gap-4">
-        <h2>{{ series.SeriesName }}</h2>
-        <p class="text-sm text-gray-400">{{ series.Overview }}</p>
-
-        <app-tag-section
-          title="Actors"
-          [tags]="series.Actors"
-        ></app-tag-section>
-        <app-tag-section title="Genre" [tags]="series.Genre"></app-tag-section>
-        <div class="flex gap-4 bg-slate-800 p-2 rounded-md">
-          <app-info-field
-            label="Air Day"
-            [value]="series.Airs_DayOfWeek"
-          ></app-info-field>
-
-          <app-info-field
-            label="Air Time"
-            [value]="series.Airs_Time"
-          ></app-info-field>
+        <div class="flex items-center justify-start">
+          <img
+            ngSrc="assets/svg/simpsons.svg"
+            alt=""
+            width="400"
+            height="280"
+            class="object-contain"
+          />
         </div>
+
+        <h2>{{ series.SeriesName }}</h2>
+        <p class="text-sm text-gray-400 mb-8">{{ series.Overview }}</p>
+
         <div class="flex gap-4">
           <app-info-field
             label="Rating"
@@ -76,11 +77,30 @@ const INITIAL_STATE: SeriesOverviewState = {
             [value]="series.Status"
           ></app-info-field>
         </div>
+
+        <div class="flex gap-4 bg-slate-800 p-2 rounded-md">
+          <app-info-field
+            label="Air Day"
+            [value]="series.Airs_DayOfWeek"
+          ></app-info-field>
+
+          <app-info-field
+            label="Air Time"
+            [value]="series.Airs_Time"
+          ></app-info-field>
+        </div>
+
+        <app-tag-section
+          title="Actors"
+          [tags]="series.Actors"
+        ></app-tag-section>
+        <app-tag-section title="Genre" [tags]="series.Genre"></app-tag-section>
+
         <div class="flex flex-wrap mt-4">
           <div
-            class="w-full h-full md:w-1/2 lg:w-1/3 flex flex-1 card flex-col gap-4"
+            class="w-full h-full md:w-1/2 lg:w-1/3 flex flex-1 flex-col gap-4"
           >
-            <h2 class="text-xl text-gray-100">Seasons</h2>
+            <h2>Seasons</h2>
             <ul
               class="list-none text-gray-300 list-inside grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 "
             >
@@ -88,9 +108,7 @@ const INITIAL_STATE: SeriesOverviewState = {
                 *ngFor="let season of seasons$ | async"
                 [routerLink]="['/season', season]"
               >
-                <li
-                  class="bg-slate-700 rounded-md px-2 py-4 hover:bg-slate-600 cursor-pointer"
-                >
+                <li class="card">
                   <span> Season {{ season }} </span>
                 </li>
               </a>

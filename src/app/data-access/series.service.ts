@@ -19,17 +19,36 @@ export class SeriesService {
     );
   }
 
-  getEpisodes({ page }: { page: number } = { page: 1 }): Observable<Episode[]> {
-    if (page < 1) {
-      throw new Error('Page must be greater than 0');
-    }
-
+  getEpisodeById(episodeId: number): Observable<Episode | undefined> {
     return this._fetchAllData().pipe(
       map((seriesResponse: SeriesResponse) => {
-        return seriesResponse.episode.slice(
-          (page - 1) * PAGE_SIZE,
-          page * PAGE_SIZE,
+        return seriesResponse.episode.find(
+          (episode: Episode) => Number(episode.id) === episodeId,
         );
+      }),
+    );
+  }
+
+  getNextEpisodeIdById(episodeId: number): Observable<string | undefined> {
+    return this._fetchAllData().pipe(
+      map((seriesResponse: SeriesResponse) => {
+        const episodeIndex = seriesResponse.episode.findIndex(
+          (episode: Episode) => Number(episode.id) === episodeId,
+        );
+
+        return seriesResponse.episode[episodeIndex + 1]?.id;
+      }),
+    );
+  }
+
+  getPreviousEpisodeIdById(episodeId: number): Observable<string | undefined> {
+    return this._fetchAllData().pipe(
+      map((seriesResponse: SeriesResponse) => {
+        const episodeIndex = seriesResponse.episode.findIndex(
+          (episode: Episode) => Number(episode.id) === episodeId,
+        );
+
+        return seriesResponse.episode[episodeIndex - 1]?.id;
       }),
     );
   }

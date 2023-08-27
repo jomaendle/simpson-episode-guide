@@ -10,5 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class InfoFieldComponent {
   @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() value: string | number | unknown = '';
 }

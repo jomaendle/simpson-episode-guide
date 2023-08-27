@@ -1,8 +1,6 @@
 <header class="flex items-center gap-2">
   <h4 class="font-bold mb-2 flex-1">{{ title }}</h4>
-  <button (click)="onCollapse()">
-    Show {{ isExpanded ? "less" : "more" }}
-  </button>
+  <button class="text-sm">Show {{ isExpanded ? "less" : "more" }}</button>
 </header>
 <div *ngIf="isExpanded" class="tag-wrapper">
   <span *ngFor="let tag of tags" class="tag">
