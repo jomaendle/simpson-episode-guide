@@ -1,4 +1,11 @@
-# SimpsonEpisodeGuide
+
+# Simpson Episode Guide
+
+This is a demo application which uses a pre-generated XML file to display a list of episodes from the Simpsons. <br> <br>
+To run the application, you need to have Node.js installed on your machine. You can download it from [here](https://nodejs.org/en/download/). <br>
+Before you can start the application, execute `npm install` in the root directory of the project to install all dependencies. <br> <br>
+After that, you can start the application by executing `ng serve`. The application will be available at `http://localhost:4200/`. <br>
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
@@ -25,3 +32,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+Johannes Mändle on Saturday, August, 27th 2023.
