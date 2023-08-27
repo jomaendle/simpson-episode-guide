@@ -1,6 +1,8 @@
 
 # Simpson Episode Guide
 
+Live preview: [https://simpsons-episode-guide.netlify.app/](https://simpsons-episode-guide.netlify.app/) <br> <br>
+
 This is a demo application which uses a pre-generated XML file to display a list of episodes from the Simpsons. <br> <br>
 To run the application, you need to have Node.js installed on your machine. You can download it from [here](https://nodejs.org/en/download/). <br>
 Before you can start the application, execute `npm install` in the root directory of the project to install all dependencies. <br> <br>
