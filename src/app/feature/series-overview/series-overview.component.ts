@@ -90,11 +90,18 @@ const INITIAL_STATE: SeriesOverviewState = {
           ></app-info-field>
         </div>
 
-        <app-tag-section
-          title="Actors"
-          [tags]="series.Actors"
-        ></app-tag-section>
-        <app-tag-section title="Genre" [tags]="series.Genre"></app-tag-section>
+        <div class="flex flex-col md:flex-row w-full gap-4 items-baseline">
+          <app-tag-section
+            title="Actors"
+            [tags]="series.Actors"
+            class="flex-1"
+          ></app-tag-section>
+          <app-tag-section
+            title="Genre"
+            [tags]="series.Genre"
+            class="flex-1"
+          ></app-tag-section>
+        </div>
 
         <div class="flex flex-wrap mt-4">
           <div
