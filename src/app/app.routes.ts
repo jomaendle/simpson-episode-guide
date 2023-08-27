@@ -9,4 +9,12 @@ export const routes: Routes = [
         (m) => m.SeriesOverviewComponent,
       ),
   },
+  {
+    path: 'season/:seasonId',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import('./feature/season-overview/season-overview.component').then(
+        (m) => m.SeasonOverviewComponent,
+      ),
+  },
 ];

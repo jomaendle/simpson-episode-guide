@@ -1,0 +1,17 @@
+<ng-container *ngrxLet="season$ as season">
+  <button routerLink="../../">Back</button>
+
+  <h2 class="">Season {{ season.seasonId }}</h2>
+
+  <div>
+    <ul class="flex flex-col gap-4">
+      <li *ngFor="let episode of season.episodes">
+        <h3>{{ episode.EpisodeNumber }} - {{ episode.EpisodeName }}</h3>
+
+        <p class="text-gray-300 text-sm">
+          {{ episode.Overview }}
+        </p>
+      </li>
+    </ul>
+  </div>
+</ng-container>

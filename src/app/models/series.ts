@@ -1,6 +1,6 @@
 export interface SeriesResponse {
-  Episode: Episode[];
-  Series: Series;
+  episode: Episode[];
+  series: Series;
 }
 
 export interface Episode {
@@ -45,12 +45,12 @@ export enum Language {
 
 export interface Series {
   id: string;
-  Actors: string;
+  Actors: string[];
   Airs_DayOfWeek: string;
   Airs_Time: string;
   ContentRating: string;
   FirstAired: Date;
-  Genre: string;
+  Genre: string[];
   IMDB_ID: string;
   Language: Language;
   Network: string;
@@ -71,4 +71,9 @@ export interface Series {
   poster: string;
   tms_wanted_old: string;
   zap2it_id: string;
+}
+
+export interface Season {
+  seasonId: number;
+  episodes: Episode[];
 }

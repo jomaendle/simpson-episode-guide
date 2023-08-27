@@ -14,7 +14,7 @@ export class SeriesService {
   getSeriesInfo(): Observable<Series> {
     return this._fetchAllData().pipe(
       map((seriesResponse: SeriesResponse) => {
-        return seriesResponse.Series;
+        return seriesResponse.series;
       }),
     );
   }
@@ -26,10 +26,35 @@ export class SeriesService {
 
     return this._fetchAllData().pipe(
       map((seriesResponse: SeriesResponse) => {
-        return seriesResponse.Episode.slice(
+        return seriesResponse.episode.slice(
           (page - 1) * PAGE_SIZE,
           page * PAGE_SIZE,
         );
+      }),
+    );
+  }
+
+  getEpisodesBySeason(seasonId: number): Observable<Episode[]> {
+    return this._fetchAllData().pipe(
+      map((seriesResponse: SeriesResponse) => {
+        return seriesResponse.episode.filter((episode: Episode) => {
+          return Number(episode.SeasonNumber) === seasonId;
+        });
+      }),
+    );
+  }
+
+  getAllSeasons(): Observable<number[]> {
+    return this._fetchAllData().pipe(
+      map((seriesResponse: SeriesResponse) => {
+        const seasons: number[] = [];
+        seriesResponse.episode.forEach((episode: Episode) => {
+          const seasonNumber: number = Number(episode.SeasonNumber);
+          if (!seasons.includes(seasonNumber)) {
+            seasons.push(seasonNumber);
+          }
+        });
+        return seasons;
       }),
     );
   }
@@ -46,10 +71,41 @@ export class SeriesService {
       })
       .pipe(
         map((response: string) => JSON.parse(response)),
-        map((seriesResponse: unknown) => {
-          return seriesResponse as SeriesResponse;
-        }),
+        map(
+          (
+            seriesResponse: SeriesResponse & {
+              Series: Series;
+              Episode: Episode[];
+            },
+          ) => {
+            return <SeriesResponse>{
+              ...(seriesResponse as SeriesResponse),
+              series: {
+                ...seriesResponse.Series,
+                Actors: convertStringToArrayWithSplit(
+                  seriesResponse.Series.Actors as unknown as string,
+                  '|',
+                ),
+                Genre: convertStringToArrayWithSplit(
+                  seriesResponse.Series.Genre as unknown as string,
+                  '|',
+                ),
+              },
+              episode: seriesResponse.Episode,
+            };
+          },
+        ),
         shareReplay(1),
       );
   }
+}
+
+export function convertStringToArrayWithSplit(
+  originalString: string,
+  splitBy: string,
+): string[] {
+  return originalString
+    .split(splitBy)
+    .filter((item: string) => item.trim().length > 0)
+    .map((item: string) => item.trim());
 }

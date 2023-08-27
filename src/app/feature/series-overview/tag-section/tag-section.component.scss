@@ -1,0 +1,7 @@
+.tag {
+  @apply bg-slate-700 rounded-full px-3 py-1 text-sm;
+}
+
+.tag-wrapper {
+  @apply flex gap-2 flex-wrap;
+}
